@@ -64,12 +64,22 @@ public class HomeController : Controller
     {
         _logger.LogInformation($"Attempting login with Username: {username}");
 
-        var lecturer = _context.Lecturers.FirstOrDefault(l => l.Username == username);  // Find lecturer by username
+        // Find the lecturer by username
+        var user = _context.Lecturers.FirstOrDefault(l => l.Username == username);
 
-        if (lecturer != null && BCrypt.Net.BCrypt.Verify(password, lecturer.Password))  // Verify password
+        if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))  // Verify password
         {
-            // Store user role in session after successful login
-            HttpContext.Session.SetString("UserRole", "Lecturer");
+            // Check the user's role and set it in session
+            string userRole = "Lecturer"; // Default role
+
+            // Check if the user is an admin (you can adjust this logic as per your requirements)
+            if (user.Username == "admin") // Assuming "admin" is the admin username
+            {
+                userRole = "Admin";
+            }
+
+            // Store the role in the session
+            HttpContext.Session.SetString("UserRole", userRole);
 
             // Redirect to Index page after successful login
             return RedirectToAction("Index", "Home");
@@ -93,6 +103,21 @@ public class HomeController : Controller
         }
 
         // If not logged in, redirect to login page
+        return RedirectToAction("Login", "Home");
+    }
+
+    // Logout action to clear the session and redirect to login page
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Logout()
+    {
+        // Clear the session
+        HttpContext.Session.Clear();
+
+        // Log out message (optional)
+        _logger.LogInformation("User logged out.");
+
+        // Redirect to login page
         return RedirectToAction("Login", "Home");
     }
 

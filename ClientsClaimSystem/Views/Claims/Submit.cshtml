@@ -31,77 +31,91 @@
 </form>
 
 <a class="btn btn-secondary mt-3" href="/">Back</a>
-
 <style>
-    /* General Styling */
+    /* Submit Claim Page Styling */
     body {
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    /* Styling for the form container */
-    .claim-form {
-        max-width: 600px;
-        margin: 40px auto;
+        background-color: #f4f7f6;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
         padding: 20px;
-        background-color: #ffffff;
-        border: 1px solid #dee2e6;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Styling for form labels and inputs */
-    .form-group label {
-        font-weight: bold;
-        color: #343a40;
-    }
-
-    .form-control {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
-
-    .form-control-file {
-        margin-bottom: 15px;
-    }
-
-    /* Submit Button Styling */
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        width: 100%;
-    }
-
-    .btn-secondary {
-        width: 100%;
-    }
-
-    /* Validation Text */
-    .text-danger {
-        font-size: 14px;
-    }
-
-    /* General Page Styling */
     h2 {
-        color: #343a40;
-        font-weight: bold;
-    }
-
-    .text-center {
+        color: #27ae60;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
         text-align: center;
     }
 
-    .mt-4 {
-        margin-top: 40px;
+    .claim-form {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .mt-3 {
-        margin-top: 30px;
+        .claim-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .claim-form label {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .claim-form input,
+        .claim-form textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+            .claim-form input:focus,
+            .claim-form textarea:focus {
+                border-color: #3498db;
+                outline: none;
+            }
+
+        .claim-form .form-control-file {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .claim-form button {
+            background-color: #3498db;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+            .claim-form button:hover {
+                background-color: #2980b9;
+            }
+
+    .btn-secondary {
+        background-color: #7f8c8d;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 5px;
     }
+
+        .btn-secondary:hover {
+            background-color: #95a5a6;
+        }
+
+
 </style>
+

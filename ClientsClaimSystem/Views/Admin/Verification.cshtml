@@ -20,85 +20,59 @@
             <tr>
                 <td>@claim.LecturerName</td>
                 <td>@claim.HoursWorked</td>
-                <td>R @claim.HourlyRate </td>  
-                <td>R@((claim.HoursWorked * claim.HourlyRate).ToString("F2"))</td>
-                <!-- Corrected -->
+                <td>@claim.HourlyRate.ToString("C")</td>
+                <td>@(claim.HoursWorked * claim.HourlyRate).ToString("C")</td>
                 <td>@claim.Description</td>
-                <td>@claim.SubmissionDate.ToString("d", System.Globalization.CultureInfo.CurrentCulture)</td>
+                <td>@claim.SubmissionDate.ToString("d")</td>
                 <td>
-                    <div class="action-buttons">
-                        <form asp-action="ApproveClaim" asp-controller="Admin" method="post">
-                            <input type="hidden" name="claimID" value="@claim.ClaimID" />
-                            <button type="submit" class="btn btn-success" @(claim.IsApproved ? "disabled" : "")>Approve</button>
-                        </form>
-                        <form asp-action="RejectClaim" asp-controller="Admin" method="post">
-                            <input type="hidden" name="claimID" value="@claim.ClaimID" />
-                            <button type="submit" class="btn btn-danger" @(claim.IsApproved ? "disabled" : "")>Reject</button>
-                        </form>
-                    </div>
+                    <form asp-action="ApproveClaim" asp-controller="Admin" method="post" style="display:inline;">
+                        <input type="hidden" name="claimID" value="@claim.ClaimID" />
+                        <button type="submit" class="btn btn-success" @(claim.IsApproved ? "disabled" : "")>Approve</button>
+                    </form>
+                    <form asp-action="RejectClaim" asp-controller="Admin" method="post" style="display:inline;">
+                        <input type="hidden" name="claimID" value="@claim.ClaimID" />
+                        <button type="submit" class="btn btn-danger" @(claim.IsApproved ? "disabled" : "")>Reject</button>
+                    </form>
                 </td>
             </tr>
         }
-
     </tbody>
 </table>
 
-<a href="@Url.Action("Logout", "Admin")" class="btn btn-secondary mt-3">Logout</a>
+<div class="text-center mt-3">
+    <form method="post" asp-action="Logout">
+        <button type="submit" class="btn btn-secondary">Logout</button>
+    </form>
+</div>
 
 <style>
-    /* General Styling */
     body {
         background-color: #f0f2f5;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: Arial, sans-serif;
     }
 
-    /* Claims Table Styling */
     .claims-table {
         width: 90%;
-        max-width: 1000px;
         margin: 40px auto;
         border-collapse: collapse;
-        background-color: #ffffff;
+        background-color: #fff;
+        border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        overflow: hidden;
     }
-
-        .claims-table thead {
-            background-color: #343a40;
-            color: #ffffff;
-        }
 
         .claims-table th, .claims-table td {
-            padding: 15px;
+            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #ddd;
         }
 
-        .claims-table th {
-            font-weight: bold;
-        }
-
-        .claims-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-    /* Action Button Container */
-    .action-buttons {
-        display: flex;
-        flex-direction: column; /* Stack buttons vertically */
-        gap: 10px; /* Space between buttons */
-    }
-
-    /* Button Styling */
     .btn-success, .btn-danger {
-        padding: 10px 20px;
-        font-size: 14px;
-        border: none;
-        border-radius: 5px;
-        color: #ffffff;
+        margin: 5px 0;
+        padding: 8px 12px;
+        border-radius: 4px;
+        color: #fff;
         cursor: pointer;
-        width: 100%; /* Ensure buttons are full width */
+        border: none;
     }
 
     .btn-success {
@@ -109,35 +83,10 @@
         background-color: #dc3545;
     }
 
-    /* Logout Button Styling */
     .btn-secondary {
-        display: block;
-        width: 150px;
-        margin: 30px auto;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        text-align: center;
-        color: #ffffff;
         background-color: #6c757d;
+        color: #fff;
+        border-radius: 4px;
         text-decoration: none;
-    }
-
-    /* General Page Styling */
-    h2 {
-        color: #343a40;
-        font-weight: bold;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    .mt-4 {
-        margin-top: 40px;
-    }
-
-    .mt-3 {
-        margin-top: 30px;
     }
 </style>

@@ -27,54 +27,55 @@
 <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Back</a>
 
 <style>
-    /* Page title styling */
+    body {
+        background-color: #f4f4f4;
+        font-family: Arial, sans-serif;
+    }
+
     h2 {
         color: #343a40;
-        font-weight: bold;
         text-align: center;
+        font-size: 24px;
         margin-top: 20px;
+        font-weight: 700;
     }
 
-    /* Claims Table Styling */
     .claims-table {
-        width: 80%;
-        max-width: 800px;
+        width: 90%;
         margin: 20px auto;
         border-collapse: collapse;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        overflow: hidden;
     }
 
-        .claims-table thead {
-            background-color: #343a40;
-            color: #fff;
-        }
-
-        .claims-table th,
-        .claims-table td {
+        .claims-table th, .claims-table td {
             padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
-        .claims-table th {
-            font-weight: 600;
+        .claims-table thead {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
         }
 
-    /* Button Styling */
+        .claims-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
     .btn-secondary {
         display: block;
         width: 100px;
         margin: 20px auto;
-        padding: 10px 15px;
-        font-size: 14px;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
         color: #fff;
         background-color: #6c757d;
         border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
+        transition: 0.3s;
     }
 
         .btn-secondary:hover {

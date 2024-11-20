@@ -42,15 +42,13 @@
         margin-top: 20px;
         padding: 15px;
         border-radius: 4px;
-    }
-
-    .alert-danger {
         background-color: #f8d7da;
         color: #721c24;
         border-color: #f5c6cb;
     }
 </style>
 
+<h2>Admin Registration</h2>
 <form asp-action="Register" method="post">
     @Html.AntiForgeryToken()
 
@@ -67,7 +65,7 @@
 
 @if (!ViewData.ModelState.IsValid)
 {
-    <div class="alert alert-danger">
+    <div class="alert">
         @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
         {
             <p>@error.ErrorMessage</p>
