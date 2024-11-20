@@ -2,7 +2,6 @@ using ClientsClaimSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Session;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add HTTPS Redirection to enable secure connections
