@@ -48,13 +48,7 @@ app.UseAuthorization();
 // Map default route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-// Map claims-specific routes
-app.MapControllerRoute(
-    name: "claims",
-    pattern: "Claims/{action=Index}/{id?}",
-    defaults: new { controller = "Claims", action = "Index" });
+    pattern: "{controller=Home}/{action=Register}/{id?}"); // Redirect to Register if no action is specified
 
 // Start the application
 app.Run();

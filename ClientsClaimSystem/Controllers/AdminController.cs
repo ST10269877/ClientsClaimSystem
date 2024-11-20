@@ -116,9 +116,14 @@ public class AdminController : Controller
 
     public IActionResult Logout()
     {
+        // Clear the session when the user logs out
         HttpContext.Session.Clear();
+
         _logger.LogInformation("Admin logged out.");
-        return RedirectToAction("Index", "Home"); 
+
+        // Redirect to Home controller's Index page after logout
+        return RedirectToAction("Index", "Home");
     }
+
 
 }

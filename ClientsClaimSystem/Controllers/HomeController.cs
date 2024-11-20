@@ -15,19 +15,19 @@ public class HomeController : Controller
         _context = context;
     }
 
-    // Initial landing page for Register view (for Lecturer)
+    // Register page
     public IActionResult Register()
     {
         return View();
     }
 
-    // Login page for Lecturer
+    // Login page
     public IActionResult Login()
     {
         return View();
     }
 
-    // Handle Register form submission for Lecturer
+    // Handle Register form submission
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Register(Lecturer model)
@@ -41,7 +41,7 @@ public class HomeController : Controller
             var lecturer = new Lecturer
             {
                 Username = model.Username,
-                Email = model.Email,  // Add email if necessary
+                Email = model.Email,  // Optional: include email if needed
                 Password = hashedPassword
             };
 
@@ -49,7 +49,7 @@ public class HomeController : Controller
             _context.Lecturers.Add(lecturer);
             _context.SaveChanges();
 
-            // Redirect to the Login page after successful registration
+            // Redirect to Login page after successful registration
             return RedirectToAction("Login", "Home");
         }
 
@@ -57,35 +57,43 @@ public class HomeController : Controller
         return View(model);
     }
 
-    // Handle Login form submission for Lecturer
+    // Handle Login form submission
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Login(string username, string password)
     {
         _logger.LogInformation($"Attempting login with Username: {username}");
-        var lecturer = _context.Lecturers.FirstOrDefault(l => l.Username == username);  // Look up the Lecturer by username
 
-        if (lecturer != null && BCrypt.Net.BCrypt.Verify(password, lecturer.Password))  // Check if password matches
+        var lecturer = _context.Lecturers.FirstOrDefault(l => l.Username == username);  // Find lecturer by username
+
+        if (lecturer != null && BCrypt.Net.BCrypt.Verify(password, lecturer.Password))  // Verify password
         {
-            HttpContext.Session.SetString("UserRole", "Lecturer");  // Store role in session
-            return RedirectToAction("Index", "Home");  // Redirect to Index page after successful login
+            // Store user role in session after successful login
+            HttpContext.Session.SetString("UserRole", "Lecturer");
+
+            // Redirect to Index page after successful login
+            return RedirectToAction("Index", "Home");
         }
 
-        ModelState.AddModelError("", "Invalid username or password.");  // Add error if login fails
+        // Add error message if login fails
+        ModelState.AddModelError("", "Invalid username or password.");
         return View();  // Return to login view if login fails
     }
 
-    // Index page: Use this for logged-in users
+    // Index page - for logged-in users only
     public IActionResult Index()
     {
-        // Optionally check if the user is logged in (by checking session)
-        if (HttpContext.Session.GetString("UserRole") != null)
+        // Check if the session has an active user role
+        var userRole = HttpContext.Session.GetString("UserRole");
+
+        if (!string.IsNullOrEmpty(userRole))
         {
-            return View();  // Return Index page for logged-in users
+            // Show Index page if logged in
+            return View();
         }
 
         // If not logged in, redirect to login page
-        return RedirectToAction("Login");
+        return RedirectToAction("Login", "Home");
     }
 
     public IActionResult Privacy()
