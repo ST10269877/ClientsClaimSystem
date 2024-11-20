@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ClientsClaimSystem.Models.Claim>
+
+<h2>Approved Claims</h2>
+
+<table class="claims-table">
+    <thead>
+        <tr>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate.ToString("C")</td>
+                <td>@claim.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Back</a>
+
+<style>
+    /* Styling for the page title */
+    h2 {
+        color: #343a40;
+        font-weight: bold;
+    }
+
+    /* Styling for the claims list */
+    .claims-list {
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .list-group-item {
+        padding: 15px;
+        font-size: 18px;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .claim-item {
+        display: block;
+    }
+
+    /* Styling for the back button */
+    .btn-secondary {
+        display: block;
+        width: 100px;
+        margin: 20px auto;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+</style>
+

@@ -1,0 +1,107 @@
+﻿@model ClientsClaimSystem.Models.Claim
+
+<h2 class="text-center mt-4">Submit a Claim</h2>
+
+<form asp-action="Submit" enctype="multipart/form-data" method="post" class="claim-form">
+    <div class="form-group">
+        <label for="LecturerName">Lecturer Name</label>
+        <input type="text" asp-for="LecturerName" class="form-control" required />
+        <span asp-validation-for="LecturerName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="HoursWorked">Hours Worked</label>
+        <input type="number" asp-for="HoursWorked" class="form-control" required />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="HourlyRate">Hourly Rate</label>
+        <input type="number" asp-for="HourlyRate" class="form-control" required />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Document">Upload Document</label>
+        <input type="file" name="document" class="form-control-file" accept=".pdf,.jpg,.jpeg,.png,.gif" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+
+<a class="btn btn-secondary mt-3" href="/">Back</a>
+
+<style>
+    /* General Styling */
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Styling for the form container */
+    .claim-form {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling for form labels and inputs */
+    .form-group label {
+        font-weight: bold;
+        color: #343a40;
+    }
+
+    .form-control {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .form-control-file {
+        margin-bottom: 15px;
+    }
+
+    /* Submit Button Styling */
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .btn-secondary {
+        width: 100%;
+    }
+
+    /* Validation Text */
+    .text-danger {
+        font-size: 14px;
+    }
+
+    /* General Page Styling */
+    h2 {
+        color: #343a40;
+        font-weight: bold;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-4 {
+        margin-top: 40px;
+    }
+
+    .mt-3 {
+        margin-top: 30px;
+    }
+</style>

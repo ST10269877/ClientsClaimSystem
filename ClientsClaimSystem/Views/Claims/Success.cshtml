@@ -1,0 +1,76 @@
+﻿@model ClientsClaimSystem.Models.Claim
+
+<h2 class="text-center mt-4 text-success">Claim Submitted Successfully</h2>
+
+<div class="claim-details my-4">
+    <p><strong>Lecturer Name:</strong> @Model.LecturerName</p>
+    <p><strong>Hours Worked:</strong> @Model.HoursWorked</p>
+    <p><strong>Hourly Rate:</strong> @Model.HourlyRate</p>
+    <p><strong>Description:</strong> @Model.Description</p>
+    <p><strong>Date Submitted:</strong> @Model.SubmissionDate.ToShortDateString()</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Document:</strong> <a href="/documents/@Model.DocumentPath" class="text-primary">View Document</a></p>
+</div>
+
+<a class="btn btn-secondary mt-3" href="/">Back to Home</a>
+
+<style>
+    /* General Styling */
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Styling for the page title (green for success) */
+    h2.text-success {
+        color: #28a745; /* Bootstrap's 'success' color */
+        font-weight: bold;
+    }
+
+    /* Styling for the claim details */
+    .claim-details {
+        max-width: 600px;
+        margin: auto;
+        background-color: #ffffff;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+        .claim-details p {
+            font-size: 16px;
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        .claim-details a {
+            text-decoration: underline;
+        }
+
+    /* Button Styling */
+    .btn-secondary {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    /* General Page Styling */
+    h2 {
+        text-align: center;
+    }
+
+    .mt-4 {
+        margin-top: 40px;
+    }
+
+    .my-4 {
+        margin: 40px 0;
+    }
+
+    .mt-3 {
+        margin-top: 30px;
+    }
+</style>

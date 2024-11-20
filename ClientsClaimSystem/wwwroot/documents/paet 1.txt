@@ -1,0 +1,466 @@
+using ClientClaimSystem.Data;
+using ClientClaimSystem.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+
+
+public class ClientClaimsController : Controller
+{
+    private readonly ClaimContext _context;
+
+    public ClientClaimsController(ClaimContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        return View(await _context.ClientClaims.ToListAsync());
+    }
+
+    public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var clientClaim = await _context.ClientClaims
+            .FirstOrDefaultAsync(m => m.ID == id);
+
+        if (clientClaim == null)
+        {
+            return NotFound();
+        }
+
+        return View(clientClaim);
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create([Bind("ContractNumber,ClaimAmount,ClaimDate,Status")] ClientClaim clientClaim)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Add(clientClaim);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        return View(clientClaim);
+    }
+
+    public async Task<IActionResult> Edit(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var clientClaim = await _context.ClientClaims.FindAsync(id);
+
+        if (clientClaim == null)
+        {
+            return NotFound();
+        }
+
+        return View(clientClaim);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, [Bind("ID,ContractNumber,ClaimAmount,ClaimDate,Status")] ClientClaim clientClaim)
+    {
+        if (id != clientClaim.ID)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(clientClaim);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClientClaimExists(clientClaim.ID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return View(clientClaim);
+    }
+
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var clientClaim = await _context.ClientClaims
+            .FirstOrDefaultAsync(m => m.ID == id);
+
+        if (clientClaim == null)
+        {
+            return NotFound();
+        }
+
+        return View(clientClaim);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        var claim = await _context.ClientClaims.FindAsync(id);
+        if (claim == null)
+        {
+            return NotFound();
+        }
+        _context.ClientClaims.Remove(claim);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+
+    private bool ClientClaimExists(int id)
+    {
+        return _context.ClientClaims.Any(e => e.ID == id);
+    }
+}
+
+
+
+
+
+
+
+
+using ClientClaimSystem.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
+
+namespace ClientClaimSystem.Data
+{
+    public class ClaimContext : DbContext
+    {
+        public ClaimContext(DbContextOptions<ClaimContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<ClientClaim> ClientClaims { get; set; }
+    }
+}
+
+
+
+
+using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace ClientClaimSystem.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "ClientClaims",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ContractNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClaimAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ClaimDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientClaims", x => x.ID);
+                });
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ClientClaims");
+        }
+    }
+}
+
+
+
+// <auto-generated />
+using System;
+using ClientClaimSystem.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
+
+namespace ClientClaimSystem.Migrations
+{
+    [DbContext(typeof(ClaimContext))]
+    partial class ClaimContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ClientClaimSystem.Models.ClientClaim", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<decimal>("ClaimAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ClaimDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ContractNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ClientClaims");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+
+
+
+using System.ComponentModel.DataAnnotations;
+
+
+namespace ClientClaimSystem.Models
+{
+    public class ClientClaim
+    {
+        public int ID { get; set; }
+
+        [Required]
+        public string? ContractNumber { get; set; }
+
+        [Required]
+        public decimal ClaimAmount { get; set; }
+
+        [Required]
+        public DateTime ClaimDate { get; set; }
+
+        [Required]
+        public string? Status { get; set; }
+    }
+}
+
+
+
+namespace ClientClaimSystem.Models
+{
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+}
+
+
+
+
+@model IEnumerable<ClientClaimSystem.Models.ClientClaim>
+
+@{
+    ViewData["Title"] = "Client Claims List";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">@ViewData["Title"]</h1>
+        <p>
+            <a href="@Url.Action("Create")" class="btn btn-primary btn-custom">Create New Claim</a>
+        </p>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Contract Number</th>
+                        <th>Claim Amount</th>
+                        <th>Claim Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ID</td>
+                            <td>@item.ContractNumber</td>
+                            <td>@item.ClaimAmount.ToString("C")</td>
+                            <td>@item.ClaimDate.ToShortDateString()</td>
+                            <td>@item.Status</td>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = item.ID })" class="btn btn-info btn-sm">Details</a>
+                                <a href="@Url.Action("Edit", new { id = item.ID })" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .hero-section {
+            background: #007bff;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+        }
+        .btn-custom {
+            font-size: 1.25rem;
+            padding: 15px 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid hero-section">
+        <div class="container">
+            <h1>Welcome to Client Claims Management</h1>
+            <p class="lead">Manage your client claims quickly and efficiently.</p>
+            <a href="@Url.Action("Create", "ClientClaims")" class="btn btn-primary btn-custom">
+                <i class="fas fa-plus"></i> Add New Claim
+            </a>
+            <a href="@Url.Action("Index", "ClientClaims")" class="btn btn-secondary btn-custom">
+                <i class="fas fa-list"></i> View Existing Claims
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+using ClientClaimSystem.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+//Database connection
+builder.Services.AddDbContext<ClaimContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
+));
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

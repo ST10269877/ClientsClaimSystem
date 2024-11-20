@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ClientsClaimSystem.Models.Claim>
+
+<h2>Approved Claims</h2>
+
+<table class="claims-table">
+    <thead>
+        <tr>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate.ToString("C")</td>
+                <td>@claim.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Back</a>
+
+<style>
+    /* Page title styling */
+    h2 {
+        color: #343a40;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Claims Table Styling */
+    .claims-table {
+        width: 80%;
+        max-width: 800px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .claims-table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .claims-table th,
+        .claims-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .claims-table th {
+            font-weight: 600;
+        }
+
+    /* Button Styling */
+    .btn-secondary {
+        display: block;
+        width: 100px;
+        margin: 20px auto;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #6c757d;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+</style>

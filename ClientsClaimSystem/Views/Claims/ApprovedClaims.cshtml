@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ClientsClaimSystem.Models.Claim>
+
+<h2 class="text-center mt-4 text-success">Approved Claims</h2>
+
+<table class="claims-table">
+    <thead>
+        <tr>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Amount</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>R @claim.HourlyRate </td>
+                <td>R@((claim.HoursWorked * claim.HourlyRate).ToString("F2"))</td>
+                <!-- Corrected -->
+                <td>@claim.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-secondary mt-3">Back</a>
+
+<style>
+    /* General Styling */
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Claims Table Styling */
+    .claims-table {
+        width: 90%;
+        max-width: 1000px;
+        margin: 40px auto;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .claims-table thead {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .claims-table th, .claims-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .claims-table th {
+            font-weight: bold;
+        }
+
+        .claims-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+    /* Back Button Styling */
+    .btn-secondary {
+        display: block;
+        width: 150px;
+        margin: 30px auto;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-align: center;
+        color: #ffffff;
+        background-color: #6c757d;
+        text-decoration: none;
+    }
+
+    /* Header Styling */
+    .text-center {
+        text-align: center;
+    }
+
+    .text-success {
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .mt-4 {
+        margin-top: 40px;
+    }
+
+    .mt-3 {
+        margin-top: 30px;
+    }
+</style>

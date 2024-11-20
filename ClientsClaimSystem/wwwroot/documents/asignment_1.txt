@@ -1,0 +1,230 @@
+CREATE DATABASE Assignment_1;
+
+USE  Assignment_1;
+
+-- 1
+-- Drop the existing tables if they exist
+DROP TABLE IF EXISTS Entry;
+DROP TABLE IF EXISTS Competition;
+DROP TABLE IF EXISTS Book;
+DROP TABLE IF EXISTS Genre;
+DROP TABLE IF EXISTS Author;
+GO
+
+-- Create Author table
+CREATE TABLE Author (
+    AuthorID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(255) NOT NULL,
+    Surname VARCHAR(255) NOT NULL
+);
+GO
+
+-- Create Genre table
+CREATE TABLE Genre (
+    GenreID INT PRIMARY KEY IDENTITY(1,1),
+    Description VARCHAR(255) NOT NULL
+);
+GO
+
+-- Create Book table
+CREATE TABLE Book (
+    BookID INT PRIMARY KEY IDENTITY(1,1),
+    Title VARCHAR(255) NOT NULL,
+    GenreID INT,
+    AuthorID INT,
+    FOREIGN KEY (GenreID) REFERENCES Genre(GenreID),
+    FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID)
+);
+GO
+
+-- Create Competition table
+CREATE TABLE Competition (
+    CompetitionID INT PRIMARY KEY IDENTITY(1,1),
+    Description VARCHAR(255) NOT NULL
+);
+GO
+
+-- Create Entry table
+CREATE TABLE Entry (
+    EntryID INT PRIMARY KEY IDENTITY(1,1),
+    BookID INT,
+    CompetitionID INT,
+    FOREIGN KEY (BookID) REFERENCES Book(BookID),
+    FOREIGN KEY (CompetitionID) REFERENCES Competition(CompetitionID)
+);
+GO
+
+-- 2
+-- Insert data into Author table
+INSERT INTO Author (Name, Surname) VALUES ('John', 'Doe');
+INSERT INTO Author (Name, Surname) VALUES ('Jane', 'Smith');
+INSERT INTO Author (Name, Surname) VALUES ('Emily', 'Brown');
+INSERT INTO Author (Name, Surname) VALUES ('Michael', 'Johnson');
+INSERT INTO Author (Name, Surname) VALUES ('Sarah', 'Davis');
+GO
+
+-- Insert data into Genre table
+INSERT INTO Genre (Description) VALUES ('Science Fiction');
+INSERT INTO Genre (Description) VALUES ('Fantasy');
+INSERT INTO Genre (Description) VALUES ('Mystery');
+GO
+
+-- Insert data into Book table
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book A', 1, 1);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book B', 1, 2);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book C', 2, 3);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book D', 2, 4);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book E', 3, 5);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book F', 1, 1);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book G', 2, 2);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book H', 3, 3);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book I', 1, 4);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book J', 2, 5);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book K', 3, 1);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book L', 1, 2);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book M', 2, 3);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book N', 3, 4);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book O', 1, 5);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book P', 2, 1);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book Q', 3, 2);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book R', 1, 3);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book S', 2, 4);
+INSERT INTO Book (Title, GenreID, AuthorID) VALUES ('Book T', 3, 5);
+GO
+
+-- Insert data into Competition table
+INSERT INTO Competition (Description) VALUES ('Best Sci-Fi Book');
+INSERT INTO Competition (Description) VALUES ('Best Fantasy Book');
+INSERT INTO Competition (Description) VALUES ('Best Mystery Book');
+INSERT INTO Competition (Description) VALUES ('Best Overall Fiction');
+INSERT INTO Competition (Description) VALUES ('Most Popular Book');
+INSERT INTO Competition (Description) VALUES ('Best Cover Design');
+INSERT INTO Competition (Description) VALUES ('Best Debut Author');
+INSERT INTO Competition (Description) VALUES ('Best Short Story');
+INSERT INTO Competition (Description) VALUES ('Best Series');
+INSERT INTO Competition (Description) VALUES ('Best New Genre');
+INSERT INTO Competition (Description) VALUES ('Readers Choice Award');
+INSERT INTO Competition (Description) VALUES ('Editors Choice Award');
+INSERT INTO Competition (Description) VALUES ('Best Children Book');
+INSERT INTO Competition (Description) VALUES ('Best Book Adaptation');
+INSERT INTO Competition (Description) VALUES ('Lifetime Achievement Award');
+GO
+
+-- Insert data into Entry table
+INSERT INTO Entry (BookID, CompetitionID) VALUES (1, 1);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (2, 2);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (3, 3);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (4, 4);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (5, 5);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (6, 6);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (7, 7);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (8, 8);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (9, 9);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (10, 10);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (11, 11);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (12, 12);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (13, 13);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (14, 14);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (15, 15);
+INSERT INTO Entry (BookID, CompetitionID) VALUES (1, 2);
+GO
+
+
+-- 3. 
+-- Update the surname using AuthorID
+UPDATE Author
+SET Surname = 'Williams'
+WHERE AuthorID = 1;
+GO
+
+-- 4. 
+-- Delete an author with AuthorID
+ALTER TABLE Book
+DROP CONSTRAINT AuthorID;  
+
+ALTER TABLE Book
+ADD CONSTRAINT AuthorID
+FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID)
+ON DELETE SET NULL;
+
+UPDATE Book
+SET AuthorID = NULL
+WHERE AuthorID = 5; 
+
+DELETE FROM Author
+WHERE AuthorID = 5; 
+
+
+
+-- 5. 
+-- Display all book titles, their authors, and their genres
+SELECT 
+    Book.Title AS 'Book Title',
+    CONCAT(Author.Name, ' ', Author.Surname) AS 'Author Name',
+    Genre.Description AS 'Genre'
+FROM 
+    Book
+INNER JOIN 
+    Author ON Book.AuthorID = Author.AuthorID
+INNER JOIN 
+    Genre ON Book.GenreID = Genre.GenreID
+ORDER BY 
+    Genre.Description ASC, 
+    Book.Title ASC;
+GO
+
+
+-- 6.
+-- Count the number of books written by each author
+SELECT 
+    CONCAT(Author.Name, ' ', Author.Surname) AS 'Author Name',
+    COUNT(Book.BookID) AS 'Number of Books'
+FROM 
+    Author
+INNER JOIN 
+    Book ON Author.AuthorID = Book.AuthorID
+GROUP BY 
+    Author.Name, Author.Surname
+ORDER BY 
+    COUNT(Book.BookID) DESC;
+GO
+
+
+-- 7.
+-- Display authors who have written more than two books
+SELECT 
+    CONCAT(Author.Name, ' ', Author.Surname) AS 'Author Name',
+    COUNT(Book.BookID) AS 'Number of Books'
+FROM 
+    Author
+INNER JOIN 
+    Book ON Author.AuthorID = Book.AuthorID
+GROUP BY 
+    Author.Name, Author.Surname
+HAVING 
+    COUNT(Book.BookID) > 2
+ORDER BY 
+    COUNT(Book.BookID) DESC;
+GO
+
+
+-- 8.
+-- Display book titles, their authors, genres, and competitions they have entered
+SELECT 
+    Book.Title AS 'Book Title',
+    CONCAT(Author.Name, ' ', Author.Surname) AS 'Author Name',
+    Genre.Description AS 'Genre',
+    Competition.Description AS 'Competition'
+FROM 
+    Book
+INNER JOIN 
+    Author ON Book.AuthorID = Author.AuthorID
+INNER JOIN 
+    Genre ON Book.GenreID = Genre.GenreID
+INNER JOIN 
+    Entry ON Book.BookID = Entry.BookID
+INNER JOIN 
+    Competition ON Entry.CompetitionID = Competition.CompetitionID
+ORDER BY 
+    Book.Title ASC;
+GO

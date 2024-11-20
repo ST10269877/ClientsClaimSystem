@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ClientsClaimSystem.Models.Claim>
+
+<h2 class="text-center mt-4">@(Model.FirstOrDefault()?.Status == "Approved" ? "Approved Claims" : "Rejected Claims")</h2>
+
+<table class="claims-table">
+    <thead>
+        <tr>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Amount</th>
+            <th>Description</th>
+            <th>Submission Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>R@claim.HourlyRate</td>
+                <td>R@((claim.HoursWorked * claim.HourlyRate).ToString("F2"))</td>
+                <td>@claim.Description</td>
+                <td>@claim.SubmissionDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary mt-3" href="/Admin/Verification">Back</a>
+
+<style>
+    .claims-table { /* Add any styling here */
+    }
+</style>
