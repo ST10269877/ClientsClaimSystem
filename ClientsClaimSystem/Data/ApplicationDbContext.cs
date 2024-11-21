@@ -9,6 +9,7 @@ namespace ClientsClaimSystem.Data
 
         public DbSet<Claim> Claims { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
+
         public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClientsClaimSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241120081406_AddLecturerTable")]
-    partial class AddLecturerTable
+    [Migration("20241121123943_AddTotalPaymentColumn")]
+    partial class AddTotalPaymentColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace ClientsClaimSystem.Migrations
                         new
                         {
                             AdminID = 1,
-                            Password = "$2a$11$XsOrSNSSfsl3GlarcROuW.wVXQ/mI1UZZ9qNLa6uoCz8KQH72G1qO",
+                            Password = "$2a$11$DzebHdgUZCcZQlWVMyiXzutrw5O2SRtOKHeWSpp0246b5H04491Qe",
                             Username = "admin"
                         });
                 });
@@ -85,6 +85,9 @@ namespace ClientsClaimSystem.Migrations
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("TotalPayment")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("ClaimID");
 
                     b.ToTable("Claims");
@@ -116,7 +119,7 @@ namespace ClientsClaimSystem.Migrations
                         {
                             LecturerID = 1,
                             Email = "lecturer@example.com",
-                            Password = "$2a$11$glkRn4q5TSUjkas3oAYmEOgqFJiiRFkTkcshFZXWGxsG6jEptligC",
+                            Password = "$2a$11$IG8jri7ZWMVmWda8YBOCZ.Le5iQU365eRDf4QEFAn.3QtmLnQcgOK",
                             Username = "lecturer"
                         });
                 });

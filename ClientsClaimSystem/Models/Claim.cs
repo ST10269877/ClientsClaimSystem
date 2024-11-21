@@ -8,6 +8,7 @@ namespace ClientsClaimSystem.Models
         public string? LecturerName { get; set; }
         public int HoursWorked { get; set; }
         public decimal HourlyRate { get; set; }
+        public decimal TotalPayment { get; set; }
         public string? Description { get; set; }
         public string Status { get; set; } = "Pending";
         public DateTime SubmissionDate { get; set; }

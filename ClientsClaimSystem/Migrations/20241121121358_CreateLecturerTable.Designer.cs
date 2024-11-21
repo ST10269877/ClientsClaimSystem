@@ -4,6 +4,7 @@ using ClientsClaimSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClientsClaimSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241121121358_CreateLecturerTable")]
+    partial class CreateLecturerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace ClientsClaimSystem.Migrations
                         new
                         {
                             AdminID = 1,
-                            Password = "$2a$11$DzebHdgUZCcZQlWVMyiXzutrw5O2SRtOKHeWSpp0246b5H04491Qe",
+                            Password = "$2a$11$4MKVIHdvLpWstuQjYuY.GuhbdXtsJ5K5fv9GyAdbcV/rqeNFlSdue",
                             Username = "admin"
                         });
                 });
@@ -82,9 +85,6 @@ namespace ClientsClaimSystem.Migrations
                     b.Property<DateTime>("SubmissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("TotalPayment")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("ClaimID");
 
                     b.ToTable("Claims");
@@ -116,7 +116,7 @@ namespace ClientsClaimSystem.Migrations
                         {
                             LecturerID = 1,
                             Email = "lecturer@example.com",
-                            Password = "$2a$11$IG8jri7ZWMVmWda8YBOCZ.Le5iQU365eRDf4QEFAn.3QtmLnQcgOK",
+                            Password = "$2a$11$VVQCzoz7VJ2jJtVSonB0bugZ6Yib6pjkoSYq27FzAsu9jXWIUpzDe",
                             Username = "lecturer"
                         });
                 });

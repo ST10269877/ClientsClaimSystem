@@ -3,52 +3,62 @@
 <h2 class="text-center mt-4">Submit a Claim</h2>
 
 <form asp-action="Submit" enctype="multipart/form-data" method="post" class="claim-form">
+    @Html.AntiForgeryToken()
+
     <div class="form-group">
         <label for="LecturerName">Lecturer Name</label>
-        <input type="text" asp-for="LecturerName" class="form-control" required />
+        <input type="text" id="LecturerName" asp-for="LecturerName" class="form-control" required />
         <span asp-validation-for="LecturerName" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label for="HoursWorked">Hours Worked</label>
-        <input type="number" asp-for="HoursWorked" class="form-control" required />
+        <input type="number" id="HoursWorked" asp-for="HoursWorked" class="form-control" required />
         <span asp-validation-for="HoursWorked" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label for="HourlyRate">Hourly Rate</label>
-        <input type="number" asp-for="HourlyRate" class="form-control" required />
+        <input type="number" id="HourlyRate" asp-for="HourlyRate" class="form-control" required />
         <span asp-validation-for="HourlyRate" class="text-danger"></span>
     </div>
+
+    <div class="form-group">
+        <strong id="TotalPayment">Total Payment: R 0.00</strong>
+    </div>
+
     <div class="form-group">
         <label for="Description">Description</label>
-        <textarea asp-for="Description" class="form-control" rows="4" required></textarea>
+        <textarea id="Description" asp-for="Description" class="form-control" rows="4" required></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label for="Document">Upload Document</label>
         <input type="file" name="document" class="form-control-file" accept=".pdf,.jpg,.jpeg,.png,.gif" required />
     </div>
+
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
 </form>
 
 <a class="btn btn-secondary mt-3" href="/">Back</a>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#HoursWorked, #HourlyRate').on('input', function () {
+            const hoursWorked = parseFloat($('#HoursWorked').val()) || 0;
+            const hourlyRate = parseFloat($('#HourlyRate').val()) || 0;
+            const totalPayment = (hoursWorked * hourlyRate).toFixed(2);
+            $('#TotalPayment').text(`Total Payment: R ${totalPayment}`);
+        });
+    });
+</script>
+
 <style>
-    /* Submit Claim Page Styling */
-    body {
-        background-color: #f4f7f6;
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 20px;
-    }
-
-    h2 {
-        color: #27ae60;
-        font-size: 2.5rem;
-        margin-bottom: 30px;
-        text-align: center;
-    }
-
+    /* Styling for the form */
     .claim-form {
-        max-width: 800px;
+        max-width: 600px;
         margin: 0 auto;
         background-color: white;
         padding: 20px;
@@ -56,66 +66,38 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-        .claim-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .claim-form label {
-            font-size: 1rem;
-            color: #2c3e50;
-            margin-bottom: 8px;
-        }
-
-        .claim-form input,
-        .claim-form textarea {
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-            .claim-form input:focus,
-            .claim-form textarea:focus {
-                border-color: #3498db;
-                outline: none;
-            }
-
-        .claim-form .form-control-file {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .claim-form button {
-            background-color: #3498db;
-            color: white;
-            font-size: 1.1rem;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            width: 100%;
-            cursor: pointer;
-        }
-
-            .claim-form button:hover {
-                background-color: #2980b9;
-            }
-
-    .btn-secondary {
-        background-color: #7f8c8d;
-        color: white;
-        padding: 10px 20px;
-        text-decoration: none;
+    .form-group label {
         font-size: 1rem;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ddd;
         border-radius: 5px;
     }
 
-        .btn-secondary:hover {
-            background-color: #95a5a6;
+        .form-control:focus {
+            border-color: #3498db;
         }
 
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+    }
 
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+    #TotalPayment {
+        font-size: 1.2rem;
+        color: #28a745;
+        margin-top: 10px;
+    }
 </style>
-

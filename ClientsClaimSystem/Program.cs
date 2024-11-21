@@ -1,6 +1,8 @@
 using ClientsClaimSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Session;
+using FluentValidation.AspNetCore; 
+using ClientsClaimSystem.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,12 @@ builder.Services.AddHttpsRedirection(options =>
     options.HttpsPort = 7253; // Use the port on which your app is running
 });
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+// Add services to the container and integrate FluentValidation
+builder.Services.AddControllersWithViews()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>()); // Register FluentValidation
+
+// Register PdfService for Dependency Injection
+builder.Services.AddSingleton<PdfService>(); // Register PdfService
 
 // Configure session services
 builder.Services.AddSession(options =>

@@ -1,0 +1,29 @@
+﻿@model List<ClaimReportModel>
+
+<h2>Approved Claims Report</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Claim ID</th>
+            <th>Lecturer Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Total Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.ClaimID</td>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.TotalPayment</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("DownloadReport", "HR")" class="btn btn-primary">Download PDF Report</a>

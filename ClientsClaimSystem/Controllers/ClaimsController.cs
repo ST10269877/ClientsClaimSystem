@@ -13,12 +13,6 @@ public class ClaimsController : Controller
     }
 
     // GET: /Claims/Submit
-    public IActionResult Submit()
-    {
-        return View(new Claim());
-    }
-
-    // POST: /Claims/Submit
     [HttpPost]
     public async Task<IActionResult> Submit(Claim claim)
     {
@@ -31,6 +25,7 @@ public class ClaimsController : Controller
             return View(claim);
         }
 
+        // File upload handling
         var file = Request.Form.Files["document"];
         if (file != null && file.Length > 0)
         {
@@ -61,12 +56,16 @@ public class ClaimsController : Controller
             return View(claim);
         }
 
+        // Calculate TotalPayment
+        claim.TotalPayment = claim.HoursWorked * claim.HourlyRate;
+
         claim.SubmissionDate = DateTime.Now;
         _context.Claims.Add(claim);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Success", new { claimId = claim.ClaimID });
     }
+
 
     public IActionResult Success(int claimId)
     {

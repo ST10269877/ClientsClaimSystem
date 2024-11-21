@@ -19,50 +19,100 @@
 </div>
 
 <style>
-    /* General styling for buttons and text */
-    .custom-btn {
-        padding: 15px 30px;
-        font-size: 18px;
-        font-weight: 500;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-    }
-
-        /* Hover effects for buttons */
-        .custom-btn:hover {
-            opacity: 0.8;
-            transform: scale(1.05);
-        }
-
-    /* Styling for the body to look professional */
+    /* General Styling */
     body {
-        background-color: #f8f9fa;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fc;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     h2 {
-        color: #343a40;
-    }
-
-    /* Centering the button group */
-    .d-flex {
-        max-width: 900px;
-        margin: auto;
-        justify-content: space-evenly;
-    }
-
-    /* Add spacing and alignment to the page */
-    .text-center {
+        font-size: 2.5rem;
         font-weight: 600;
-        color: #2c3e50;
-    }
-
-    .mt-4 {
+        color: #333;
         margin-top: 40px;
     }
 
-    .my-4 {
-        margin: 40px 0;
+    .text-center {
+        text-align: center;
     }
+
+    /* Button Styles */
+    .custom-btn {
+        padding: 14px 30px;
+        font-size: 16px;
+        font-weight: 500;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Individual Button Color Themes */
+    .submit-btn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+    }
+
+    .submit-btn:hover {
+        background-color: #45a049;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .approved-btn {
+        background-color: #28a745; /* Darker Green */
+        color: white;
+    }
+
+    .approved-btn:hover {
+        background-color: #218838;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .rejected-btn {
+        background-color: #dc3545; /* Red */
+        color: white;
+    }
+
+    .rejected-btn:hover {
+        background-color: #c82333;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .coordinator-btn {
+        background-color: #f0ad4e; /* Yellow */
+        color: white;
+    }
+
+    .coordinator-btn:hover {
+        background-color: #ec971f;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .logout-btn {
+        background-color: #e74c3c; /* Red for logout */
+        color: white;
+    }
+
+    .logout-btn:hover {
+        background-color: #c0392b;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Button Container Styling */
+    .d-flex {
+        max-width: 1000px;
+        margin: auto;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Logout Section Styling */
+    .my-4 {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    
 </style>
